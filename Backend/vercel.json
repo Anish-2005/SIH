@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "index.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/api/gemini/(.*)", "dest": "/index.js" },
+      { "src": "/api/server/(.*)", "dest": "/index.js" },
+      { "src": "/api/laws/(.*)", "dest": "/index.js" }
+    ]
+  }
+  

@@ -1,0 +1,67 @@
+[
+  {
+    "actType": "IPC",
+    "chapter": "Chapter XVI",
+    "section": "S. 302",
+    "title": "Punishment for murder",
+    "description": "Whoever commits murder shall be punished with death, or imprisonment for life, and shall also be liable to fine.",
+    "keywords": ["murder", "death penalty", "imprisonment"]
+  },
+  {
+    "actType": "CrPC",
+    "chapter": "Chapter XXIV",
+    "section": "S. 302",
+    "title": "Permission to conduct prosecution",
+    "description": "Any Magistrate inquiring into or trying a case may permit the prosecution to be conducted by any person other than a police officer below the rank of Inspector; but no person, other than the Advocate-General or Government Advocate or a Public Prosecutor or Assistant Public Prosecutor, shall be entitled to do so without such permission; Provided that no police officer shall be permitted to conduct the prosecution if he has taken part in the investigation into the offence with respect to which the accused is being prosecuted. Any person conducting the prosecution may do so personally or by a pleader.",
+    "keywords": ["prosecution", "magistrate", "legal procedure"]
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVI",
+    "section": "356",
+    "title": "Assault or criminal force in attempt to commit theft of property carried by a person",
+    "description": "Whoever assaults or uses criminal force to any person, in attempting to commit theft on any property which that person is then wearing or carrying shall be punished with imprisonment of either description for a term which may extend to two years, or with fine, or with both."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "378",
+    "title": "Theft",
+    "description": "Whoever, intending to take dishonestly any movable property out of the possession of any person without that person’s consent, moves that property in order to such taking, is said to commit theft."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "379",
+    "title": "Punishment for theft",
+    "description": "Whoever commits theft shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "380",
+    "title": "Theft in dwelling house, etc.",
+    "description": "Whoever commits theft in any building, tent or vessel, which building, tent or vessel is used as a human dwelling, or used for the custody of property, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "381",
+    "title": "Theft by clerk or servant of property in possession of master",
+    "description": "Whoever, being a clerk or servant, or being employed in the capacity of a clerk or servant, commits theft in respect of any property in the possession of his master or employer, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "382",
+    "title": "Theft after preparation made for causing death, hurt or restraint in order to the committing of the theft",
+    "description": "Whoever commits theft, having made preparation for causing death, or hurt, or restraint, or fear of death, or of hurt, or of restraint, to any person, in order to the committing of such theft, or in order to the effecting of his escape after the committing of such theft or in order to the retaining of property taken by such theft, shall be punished with rigorous imprisonment for a term which may extend to ten years, and shall also be liable to fine."
+  },
+  {
+    "actType": "Indian Penal Code",
+    "chapter": "Chapter XVII",
+    "section": "439",
+    "title": "Punishment for intentionally running vessel aground or ashore with intent to commit theft, etc.",
+    "description": "Whoever intentionally runs any vessel aground or ashore, intending to commit theft of any property contained therein or to dishonestly misappropriate any such property, or with intent that such theft or misappropriation of property may be committed, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine."
+  }
+]
