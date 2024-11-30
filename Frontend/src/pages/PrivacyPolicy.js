@@ -17,7 +17,7 @@ const PrivacyPolicy = () => {
           <section className="mb-10 mt-10">
             <h3 className="text-2xl text-blue-600 font-semibold mb-4">Introduction</h3>
             <p className="text-gray-700">
-              At [Your Website Name], we value your privacy. This Privacy Policy explains how we collect, use, and protect your personal data when you visit our website and use our services.
+              At LawAI, we value your privacy. This Privacy Policy explains how we collect, use, and protect your personal data when you visit our website and use our services.
             </p>
           </section>
 
@@ -70,7 +70,7 @@ const PrivacyPolicy = () => {
           <section className="mb-10">
             <h3 className="text-2xl text-blue-600 font-semibold mb-4">Contact Us</h3>
             <p className="text-gray-700">
-              If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:support@example.com" className="text-blue-500 underline">support@example.com</a>.
+              If you have any questions or concerns about this Privacy Policy, please contact us at <a href="mailto:code.a.cola.01@gmail.com" className="text-blue-500 underline">code.a.cola.01@gmail.com</a>.
             </p>
           </section>
         </main>

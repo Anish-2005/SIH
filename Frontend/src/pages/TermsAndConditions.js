@@ -70,7 +70,7 @@ const TermsAndConditions = () => {
         <section>
           <h2 className="text-2xl font-semibold mb-4">7. Contact Us</h2>
           <p>
-            If you have any questions about these terms, please contact us at <a href="mailto:support@codeacola.com" className="text-blue-600">support@codeacola.com</a>.
+            If you have any questions about these terms, please contact us at <a href="mailto:code.a.cola.01@gmail.com" className="text-blue-600">code.a.cola.01@gmail.com</a>.
           </p>
         </section>
       </main>

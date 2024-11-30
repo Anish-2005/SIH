@@ -49,7 +49,7 @@ const Accessibility = () => {
           <p>
             Accessibility is an ongoing effort, and we welcome feedback to improve our services. If you encounter any barriers or have suggestions, please contact us at:
           </p>
-          <p className="font-semibold text-blue-600 mt-2">support@codeacola.com</p>
+          <p className="font-semibold text-blue-600 mt-2">code.a.cola.01@gmail.com</p>
         </section>
       </main>
 

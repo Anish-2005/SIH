@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import './component-styles/Sidebar.css'; // Updated CSS for the menubar styling
+import classNames from 'classnames'; // Add classnames for conditional styling
+import './component-styles/Sidebar.css';
+import img from '../images/MOE.png';
 
 const Sidebar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState('');
   const [badgeNumber, setBadgeNumber] = useState('');
+  const [language, setLanguage] = useState('English'); // State to store selected language
 
   useEffect(() => {
     const storedName = localStorage.getItem('name');
@@ -18,31 +21,103 @@ const Sidebar = () => {
     }
   }, []);
 
+  // Function to handle language change
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+    // Optionally, you can store this in localStorage or context to persist across the app
+    console.log('Selected Language:', e.target.value);
+  };
+
   return (
-    <motion.nav>
-
-      <div className="sidebar-content bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-8">
+    <motion.nav className="sidebar-nav">
+      <div className="sidebar-content bg-gradient-to-r from-blue-800 via-indigo-800 to-purple-800 text-white py-4 shadow-lg">
         {/* Logo and Title */}
-        <div className="sidebar-logo">
-        <h1 className="text-7xl font-bold text-white ml-6">
-        <a href="/">
-            LawAI
-        </a>
-        </h1>
+        <div className="container mx-auto px-6 flex justify-between items-center py-2">
+          <div className="flex items-center space-x-4">
+            <span className="material-icons text-white text-3xl">gavel</span>
+            <h1 className="text-2xl font-bold tracking-wide">
+              <NavLink to="/">LawAI</NavLink>
+            </h1>
+          </div>
 
+          {/* Right Section */}
+          <div className="flex items-center space-x-6">
+            {/* Official Emblem */}
+            <img
+              src={img}
+              alt="Emblem of India"
+              className="h-12"
+            />
+            
+            {/* Help Button */}
+            <button
+              className="bg-white text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold shadow-md hover:shadow-lg transform transition hover:scale-105"
+              onClick={() => alert("Help Section")}
+            >
+              Help
+            </button>
 
-          <span className="material-icons text-white">gavel</span>
+            {/* Language Selector */}
+            <select
+              className="bg-white text-blue-800 px-4 py-2 rounded-lg text-sm font-semibold shadow-md"
+              value={language}
+              onChange={handleLanguageChange} // Handle language change
+            >
+              <option value="English">English</option>
+              <option value="Hindi">Hindi</option>
+              <option value="Bengali">Bengali</option>
+              <option value="Tamil">Tamil</option>
+              <option value="Telugu">Telugu</option>
+              <option value="Marathi">Marathi</option>
+              {/* Add other languages as required */}
+            </select>
+          </div>
         </div>
+      </div>
 
-        {/* Navigation Links */}
-        <div className="sidebar-links flex space-x-4">
-          <NavLink to="/home/query" activeClassName="active" className="sidebar-link">AI Lawyer</NavLink>
-          <NavLink to="/bareacts" activeClassName="active" className="sidebar-link">Bare Acts</NavLink>
-          <NavLink to="/home/database" activeClassName="active" className="sidebar-link">Database</NavLink>
-          <NavLink to="/home/settings" activeClassName="active" className="sidebar-link">Settings</NavLink>
-          
-          {/* Conditional Rendering of Avatar or Text */}
-          <NavLink to="/home/login" activeClassName="active" className="sidebar-link">
+      {/* Sidebar Navigation */}
+      <nav className="bg-gradient-to-r from-blue-800 to-blue-600 text-white text-sm py-4 shadow-md">
+        <div className="container mx-auto px-6 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-10">
+          {/* AI Lawyer Link */}
+          <NavLink
+            to="/home/query"
+            className={classNames(
+              'text-lg font-medium hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200',
+              { 'active': isLoggedIn }
+            )}
+          >
+            {language === 'English' ? 'AI Lawyer' : language === 'Hindi' ? 'एआई वकील' : language === 'Bengali' ? 'এআই আইনজীবী' : language === 'Tamil' ? 'ஏ.ஐ. வழக்குரைஞர்' : language === 'Telugu' ? 'ఏ.ఐ. న్యాయవాది' : language === 'Marathi' ? 'ए.आय. वकील' : 'AI Lawyer'}
+          </NavLink>
+          {/* Bare Acts Link */}
+          <NavLink
+            to="/bareacts"
+            className="text-lg font-medium hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200"
+          >
+            {language === 'English' ? 'Bare Acts' : language === 'Hindi' ? 'नंगे कृत्य' : language === 'Bengali' ? 'নগ্ন আইন' : language === 'Tamil' ? 'மரபுவழி சட்டங்கள்' : language === 'Telugu' ? 'నగ్న చట్టాలు' : language === 'Marathi' ? 'नग्न कायदे' : 'Bare Acts'}
+          </NavLink>
+          {/* Database Link */}
+          <NavLink
+            to="/home/database"
+            className="text-lg font-medium hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200"
+          >
+            {language === 'English' ? 'Database' : language === 'Hindi' ? 'डेटाबेस' : language === 'Bengali' ? 'ডাটাবেস' : language === 'Tamil' ? 'தரவுத்தளம்' : language === 'Telugu' ? 'డేటాబేస్' : language === 'Marathi' ? 'डेटाबेस' : 'Database'}
+          </NavLink>
+          {/* Settings Link */}
+          <NavLink
+            to="/home/settings"
+            className="text-lg font-medium hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200"
+          >
+            {language === 'English' ? 'Settings' : language === 'Hindi' ? 'सेटिंग्स' : language === 'Bengali' ? 'সেটিংস' : language === 'Tamil' ? 'அமைப்புகள்' : language === 'Telugu' ? 'సెట్టింగ్‌లు' : language === 'Marathi' ? 'सेटिंग्ज' : 'Settings'}
+          </NavLink>
+
+          {/* Conditional Rendering of Avatar or Login */}
+          <NavLink
+            to="/home/login"
+            className={classNames(
+              'text-lg font-medium hover:text-yellow-300 hover:underline underline-offset-4 transition duration-200',
+              { 'active': isLoggedIn }
+            )}
+          >
             {isLoggedIn ? (
               <img
                 src="https://www.pngall.com/wp-content/uploads/12/Avatar-PNG-Images.png"
@@ -50,13 +125,19 @@ const Sidebar = () => {
                 className="user-avatar rounded-full w-8 h-8 object-cover"
               />
             ) : (
-              'Login'
+              // Display Login text based on selected language
+              language === 'English' ? 'Login' :
+              language === 'Hindi' ? 'लॉगिन' :
+              language === 'Bengali' ? 'লগইন' :
+              language === 'Tamil' ? 'உள்நுழைவு' :
+              language === 'Telugu' ? 'లాగిన్' :
+              language === 'Marathi' ? 'लॉगिन' :
+              'Login' // Default to English if no match
             )}
           </NavLink>
-        </div>
 
-        
-      </div>
+        </div>
+      </nav>
     </motion.nav>
   );
 };

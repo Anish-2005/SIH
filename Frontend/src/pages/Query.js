@@ -3,19 +3,21 @@ import { FaMicrophone, FaInfoCircle, FaArrowUp } from 'react-icons/fa';
 import Sidebar from '../components/Sidebar';
 import Menubar from '../components/MenuBar'; // Import Menubar
 import Footer from '../components/Footer';
+import '../styles/Query.css';
 
 const Query = () => {
   const [query, setQuery] = useState('');
   const [response, setResponse] = useState('Response will appear here...');
   const [isListening, setIsListening] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showScrollTop, setShowScrollTop] = useState(false); // State to control the visibility of the scroll button
-  const [isMobile, setIsMobile] = useState(false); // State to track if it's a mobile screen
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   // Web Speech API initialization
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  // Wrap the initialization in useMemo to prevent re-creation on every render
   const recognition = useMemo(() => {
     const recog = new SpeechRecognition();
     recog.continuous = false;
@@ -27,14 +29,14 @@ const Query = () => {
   // Check if the screen is mobile on initial load and on window resize
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Assume mobile screens are <= 768px
+      setIsMobile(window.innerWidth <= 768);
     };
 
-    handleResize(); // Check screen size initially
-    window.addEventListener('resize', handleResize); // Update on resize
+    handleResize();
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize); // Clean up the event listener
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -55,12 +57,11 @@ const Query = () => {
   }, [recognition]);
 
   useEffect(() => {
-    // Handle scroll event to show or hide scroll-to-top button
     const handleScroll = () => {
       if (window.scrollY > 300) {
-        setShowScrollTop(true); // Show button when scrolled more than 300px
+        setShowScrollTop(true);
       } else {
-        setShowScrollTop(false); // Hide button when near top
+        setShowScrollTop(false);
       }
     };
 
@@ -86,8 +87,38 @@ const Query = () => {
 
   const handleQuerySubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError('');
 
-    const fullQuery = `${query}. You are an AI assistant with comprehensive knowledge of the Indian Constitution, including all applicable acts and sections. Your task is to assist law enforcement officers in filing an FIR by identifying and listing all relevant acts and sections that apply to the case presented. For each act or section, provide a brief explanation of its significance and how it applies to the case. Ensure that all applicable legal provisions are mentioned to help the officer file a thorough and accurate FIR. Please provide general information without including disclaimers or limitations about legal advices.`;
+    const fullQuery = `${query}. You are an AI assistant with in-depth expertise in the Indian Constitution, criminal law, and all relevant acts, sections, and legal provisions. Your role is to support law enforcement officers in the process of filing a First Information Report (FIR) by identifying and listing all applicable laws, including relevant acts, sections, and provisions. For each act or section, provide a concise yet comprehensive explanation of its significance, its direct relevance to the case, and how it should be applied in the context of the incident. Ensure that no pertinent legal provision is overlooked, and that the officer is equipped with a thorough understanding of the laws involved, enabling them to file a complete and legally sound FIR.
+After listing alll the acts, dont give any disclaimers. Just provide the below given text. 
+
+
+"The FIR should meticulously detail:
+
+1. Personal Details:
+Include the complainant’s (informant’s) full name, address, and contact details.
+
+2. Date, Time, and Location:
+Mention the exact date, time, and location where the crime or incident occurred.
+
+3. Nature of the Offense:
+Clearly state the nature of the crime or offense (e.g., theft, assault, fraud) and the specific details of the incident.
+
+4. Details of the Incident:
+Provide a detailed account of what happened. Include facts such as how the crime was committed, by whom, and any supporting circumstances.
+
+5. Witness Information:
+Mention the names and contact information of any witnesses, if available, and what they saw or heard.
+
+6. Complaint or Allegation:
+The complainant should clearly describe the incident as an allegation, and not make defamatory or baseless claims.
+
+7. Signature:
+Ensure the FIR is signed by the complainant at the end.
+
+
+This comprehensive approach ensures a legally sound and complete FIR, maximizing the chances of successful prosecution. The investigating officer should carefully consider the evidence and apply the relevant sections accordingly. Remember, this is a guide, and the specific charges will depend on the specific facts of the case as they are investigated and revealed."`;
 
     try {
       const response = await fetch('https://chatbot-for-fir-backend.vercel.app/api/gemini/generate', {
@@ -102,10 +133,12 @@ const Query = () => {
       setResponse(parseMarkdownToHTML(data.response || 'No response received'));
     } catch (error) {
       console.error('Error fetching the response:', error);
-      setResponse('Error occurred while fetching the response');
+      setError('Error occurred while fetching the response');
+      setResponse('');
     }
 
-    setQuery(''); // Clear the input field after submission
+    setIsLoading(false);
+    setQuery('');
   };
 
   const parseMarkdownToHTML = (text) => {
@@ -125,15 +158,13 @@ const Query = () => {
 
   return (
     <div className="query-page-container">
-      {/* Conditionally render Sidebar or Menubar based on screen size */}
       {isMobile ? <Menubar /> : <Sidebar />}
 
-      <main className="query-page-main-content bg-white py-16 px-8 min-h-[70vh] overflow-x-hidden mt-0">
+      <div className="query-page-main-content bg-gradient-to-r from-gray-100 to-white p-8 rounded-xl shadow-lg min-h-[70vh]">
         <h2 className="query-page-title text-4xl font-semibold text-blue-900 text-center mb-8 mt-8">
           Ask a Query
         </h2>
 
-        {/* Info Button */}
         <div className="text-center mb-4">
           <button
             onClick={toggleModal}
@@ -144,89 +175,87 @@ const Query = () => {
           </button>
         </div>
 
-        {/* Query Response Box */}
         <div className="query-response-box bg-light-gray p-8 rounded-lg shadow-md mb-10 w-full max-w-5xl mx-auto border border-gray-300">
-          <pre
-            dangerouslySetInnerHTML={{ __html: response }}
-            className="text-gray-800 font-medium leading-relaxed break-words whitespace-pre-wrap"
-            style={{
-              fontFamily: '"Arial", sans-serif',  // Use a clean and legible font family
-              fontSize: '1.1rem',  // Slightly larger font size for readability
-              lineHeight: '1.6',  // Increased line height for better legibility
-            }}
-          ></pre>
+          {isLoading ? (
+            <div className="flex flex-col justify-center items-center">
+              <div className="spinner mb-4"></div>
+              <p className="loading-message text-lg text-gray-700">Processing your query, please wait...</p>
+            </div>
+          ) : error ? (
+            <p className="error-message text-lg text-red-600">{error}</p>
+          ) : (
+            <pre
+              dangerouslySetInnerHTML={{ __html: response }}
+              className="text-gray-800 font-medium leading-relaxed break-words whitespace-pre-wrap"
+              style={{
+                fontFamily: '"Arial", sans-serif',
+                fontSize: '1.1rem',
+                lineHeight: '1.6',
+              }}
+            ></pre>
+          )}
         </div>
 
-        {/* Query Input Section */}
-        <div className="query-input-container max-w-5xl mx-auto bg-white p-8 rounded-lg shadow-md border border-gray-300">
+        <form onSubmit={handleQuerySubmit} className="query-input-container max-w-5xl mx-auto bg-gray-50 p-8 rounded-lg shadow-lg border border-gray-300">
           <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0">
-            {/* Input Box */}
-            <div className="query-input-box flex-grow mr-4">
+            <div className="query-input-box flex-grow md:mr-4">
               <input
                 type="text"
-                placeholder="Ask your query..."
+                placeholder="Type your query here..."
                 value={query}
                 onChange={handleInputChange}
-                className="query-text-input w-full p-4 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
+                className="query-text-input w-full p-4 border border-gray-300 rounded-lg shadow-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-600"
               />
             </div>
 
-            {/* Microphone Icon */}
-            <div className="query-mic-icon-container flex items-center justify-center">
+            <div className="query-mic-icon-container flex items-center justify-center md:mr-4">
               <FaMicrophone
-                className={`query-mic-icon text-3xl cursor-pointer transition-all duration-200 transform ${isListening ? 'text-blue-600 scale-110' : 'text-gray-600'}`}
+                className={`query-mic-icon text-4xl cursor-pointer ${isListening ? 'text-green-500' : 'text-gray-500'}`}
                 onClick={handleMicClick}
+                aria-label={isListening ? 'Stop listening' : 'Start listening'}
               />
             </div>
 
-            {/* Submit Button */}
-            <div className="query-submit-btn-container mt-4 md:mt-0">
+            <div className="query-submit-btn-container flex items-center justify-center md:ml-4">
               <button
-                onClick={handleQuerySubmit}
-                className="query-submit-btn bg-blue-600 text-white py-3 px-6 rounded-md shadow-md hover:bg-orange-700 transition duration-200"
+                type="submit"
+                className="submit-btn bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
               >
                 Submit
               </button>
             </div>
           </div>
-        </div>
-      </main>
+        </form>
+      </div>
 
-      {/* Info Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="modal-content bg-white p-8 rounded-lg shadow-lg max-w-3xl w-full">
-            <h3 className="text-2xl font-semibold text-blue-900 mb-4">How the Chatbot Works</h3>
-            <p className="text-gray-700 mb-4">
-              The chatbot is designed to assist law enforcement officers by providing relevant information from the Indian Constitution and legal acts.
-            </p>
-            <p className="text-gray-700 mb-4">
-              You can either type your query or use the microphone to dictate your question. The chatbot will process the information and generate a response based on the applicable sections and acts of law.
-            </p>
-            <p className="text-gray-700 mb-4">
-              This system will help you in identifying applicable laws for filing an FIR, ensuring accuracy and efficiency in your work.
-            </p>
-            <button
-              onClick={toggleModal}
-              className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Scroll to Top Button */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-4 right-4 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-200"
+          className="scroll-top-btn bg-blue-600 text-white p-3 rounded-full fixed bottom-10 right-10 hover:bg-blue-700 transition duration-200"
         >
           <FaArrowUp />
         </button>
       )}
 
-      {/* Footer */}
+      {isModalOpen && (
+        <div className="modal-overlay fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="modal-content bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
+            <h3 className="modal-title text-2xl font-semibold mb-4">How It Works</h3>
+            <p className="modal-description text-gray-700 mb-4">
+              Enter a query, and the AI assistant will provide a list of relevant laws and sections related to FIR filing.
+            </p>
+            <div className="flex justify-end">
+              <button
+                onClick={toggleModal}
+                className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

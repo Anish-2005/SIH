@@ -74,23 +74,30 @@ const Database = () => {
     <div className="bareacts-container min-h-screen flex flex-col">
       {/* Render Sidebar or MenuBar based on screen size */}
       {isMobile ? <MenuBar /> : <Sidebar />}
-      
-      <main className="main-content flex-grow p-8">
-        <h2 className="database-title text-center text-4xl font-semibold text-blue-900 text-center mb-8 mt-8">Case Database</h2>
-        
-        <div className="case-cards space-y-8">
+
+      <main className="main-content flex-grow p-8 bg-gray-50">
+        <h2 className="database-title text-center text-3xl font-semibold text-gray-800 mb-8 mt-4">
+          Case Database
+        </h2>
+
+        <div className="case-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cases.map((caseItem) => (
-            <div key={caseItem.srNo} className="case-card bg-white p-6 border rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div
+              key={caseItem.srNo}
+              className="case-card bg-white p-6 border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+            >
               <div className="case-header flex justify-between items-center mb-4">
-                <h3 className="text-xl font-semibold text-gray-700">Sr No: {caseItem.srNo}</h3>
+                <h3 className="text-xl font-semibold text-gray-800">Sr No: {caseItem.srNo}</h3>
                 <span
-                  className={`status-badge inline-block py-1 px-4 rounded-full text-white text-sm ${getStatusColor(caseItem.status)}`}
+                  className={`status-badge inline-block py-1 px-4 rounded-full text-white text-sm font-medium ${getStatusColor(
+                    caseItem.status
+                  )}`}
                 >
                   {caseItem.status}
                 </span>
               </div>
-              
-              <p className="text-gray-600">{caseItem.description}</p>
+
+              <p className="text-gray-700 text-sm leading-relaxed">{caseItem.description}</p>
             </div>
           ))}
         </div>
@@ -103,7 +110,7 @@ const Database = () => {
       {showScrollBtn && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-110 flex items-center justify-center z-50"
+          className="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition-all transform hover:scale-110 flex items-center justify-center z-50"
           aria-label="Back to top"
         >
           <span className="material-icons text-lg">arrow_upward</span>
