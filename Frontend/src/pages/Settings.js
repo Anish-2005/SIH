@@ -10,7 +10,7 @@ const Settings = () => {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false); // 2FA state
   const [sessionTimeout, setSessionTimeout] = useState(15); // Default session timeout to 15 minutes
   const [highContrast, setHighContrast] = useState(false);
-  const [activityLog, setActivityLog] = useState([
+  const [activityLog] = useState([
     { action: 'Login', time: '2024-11-25 10:30 AM' },
     { action: 'Changed Password', time: '2024-11-20 02:00 PM' },
     { action: 'Enabled 2FA', time: '2024-11-18 08:45 AM' },
@@ -27,10 +27,6 @@ const Settings = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const handleNotificationsChange = () => {
-    setNotifications(!notifications);
-  };
 
   const handle2FAChange = () => {
     setIs2FAEnabled(!is2FAEnabled); // Toggle 2FA enabled status

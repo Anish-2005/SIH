@@ -7,16 +7,12 @@ import img from '../images/MOE.png';
 
 const Sidebar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [name, setName] = useState('');
-  const [badgeNumber, setBadgeNumber] = useState('');
   const [language, setLanguage] = useState('English'); // State to store selected language
 
   useEffect(() => {
     const storedName = localStorage.getItem('name');
     const storedBadgeNumber = localStorage.getItem('badgeNumber');
     if (storedName && storedBadgeNumber) {
-      setName(storedName);
-      setBadgeNumber(storedBadgeNumber);
       setIsLoggedIn(true);
     }
   }, []);

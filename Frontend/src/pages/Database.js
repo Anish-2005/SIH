@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'; 
-import { ThemeContext } from '../ThemeContext'; 
+import React, { useEffect, useState } from 'react'; 
 import Sidebar from '../components/Sidebar'; 
 import MenuBar from '../components/MenuBar'; // Import MenuBar component for mobile
 import Footer from '../components/Footer';
 
 const Database = () => {
-  const { theme } = useContext(ThemeContext);
 
   // State to store cases
   const [cases, setCases] = useState([]);

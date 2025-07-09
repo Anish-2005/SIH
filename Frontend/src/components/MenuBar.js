@@ -6,8 +6,6 @@ import './component-styles/MenuBar.css'; // External CSS for styling
 const MenuBar = () => { 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for menu open/close
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State for login status
-  const [name, setName] = useState(''); // State for user's name
-  const [badgeNumber, setBadgeNumber] = useState(''); // State for user's badge number
 
   // Check localStorage for login state and user details when MenuBar mounts
   useEffect(() => {
@@ -16,8 +14,6 @@ const MenuBar = () => {
     const loggedInStatus = storedName && storedBadgeNumber;
 
     if (loggedInStatus) {
-      setName(storedName); // Set name from localStorage
-      setBadgeNumber(storedBadgeNumber); // Set badgeNumber from localStorage
       setIsLoggedIn(true); // Set logged in state
     }
   }, []);
